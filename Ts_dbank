@@ -1,0 +1,30 @@
+import { Principal } from "@dfinity/principal";
+// Define the dbank canister 
+interface DbankInterface {
+  deposit: (amount: u64) => void;
+  withdraw: (amount: u64) => void;
+  checkBalance: () => u64;
+}
+
+class Dbank implements DbankInterface {
+  private balance: u64 = 0;
+
+  deposit(amount: u64): void {
+    if (amount > 0) {
+      this.balance += amount;
+    }
+  }
+
+  withdraw(amount: u64): void {
+    if (amount > 0 && this.balance >= amount) {
+      this.balance -= amount;
+    }
+  }
+
+  checkBalance(): u64 {
+    return this.balance;
+  }
+}
+
+// Export the dbank canister implementation
+export default Dbank;
